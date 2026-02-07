@@ -1,7 +1,7 @@
 from flask import Flask
 from extensions import db, login_manager
 from models import User
-from config import Config   # ✅ เพิ่มบรรทัดนี้
+from config import Config
 
 
 def create_app():
@@ -10,7 +10,7 @@ def create_app():
     # ======================
     # CONFIG
     # ======================
-    app.config.from_object(Config)   # ✅ ใช้ Config แทนการ hardcode
+    app.config.from_object(Config)
 
     # ======================
     # INIT EXTENSIONS
@@ -18,6 +18,12 @@ def create_app():
     db.init_app(app)
     login_manager.init_app(app)
     login_manager.login_view = "auth.login"
+
+    # ======================
+    # CREATE TABLES (เฉพาะที่ขาด)
+    # ======================
+    with app.app_context():
+        db.create_all()
 
     # ======================
     # USER LOADER
@@ -39,7 +45,7 @@ def create_app():
     # REGISTER BLUEPRINTS
     # ======================
     app.register_blueprint(auth_bp)
-    app.register_blueprint(dashboard_bp)          # หน้า /
+    app.register_blueprint(dashboard_bp)
     app.register_blueprint(assets_bp, url_prefix="/assets")
     app.register_blueprint(checkouts_bp, url_prefix="/checkouts")
     app.register_blueprint(tickets_bp, url_prefix="/tickets")
@@ -50,6 +56,3 @@ def create_app():
 if __name__ == "__main__":
     app = create_app()
     app.run(debug=True)
-
-with app.app_context():
-    db.create_all()
