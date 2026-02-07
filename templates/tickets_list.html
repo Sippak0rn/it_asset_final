@@ -31,6 +31,10 @@
         <th style="width:220px;">ครุภัณฑ์</th>
         <th>อาการ</th>
         <th style="width:160px;">สถานะ</th>
+
+        {% if current_user.role == "admin" %}
+          <th style="width:140px; text-align:center;">จัดการ</th>
+        {% endif %}
       </tr>
     </thead>
 
@@ -38,44 +42,53 @@
       {% for t in tickets %}
       <tr>
 
-        <!-- ID -->
         <td style="color:#eaeaea; font-weight:600;">
           {{ t.id }}
         </td>
 
-        <!-- ASSET -->
         <td class="fw-semibold">
           {{ t.asset_name or "-" }}
         </td>
 
-        <!-- ISSUE -->
         <td>
           {{ t.issue or "-" }}
         </td>
 
-        <!-- STATUS (ภาษาไทย + สี) -->
         <td>
           {% if t.status == 'open' %}
-            <span class="badge"
-                  style="background:#f9a825; color:#000;">
+            <span class="badge" style="background:#f9a825; color:#000;">
               เปิดแจ้งซ่อม
             </span>
           {% elif t.status == 'closed' %}
-            <span class="badge"
-                  style="background:#2e7d32; color:#fff;">
+            <span class="badge" style="background:#2e7d32; color:#fff;">
               ปิดงานแล้ว
-            </span>
-          {% else %}
-            <span class="badge badge-secondary">
-              ไม่ทราบสถานะ
             </span>
           {% endif %}
         </td>
 
+        {% if current_user.role == "admin" %}
+        <td style="text-align:center;">
+          {% if t.status == "open" %}
+            <button
+              class="btn btn-sm"
+              style="background:#2e7d32; color:#fff;"
+              data-bs-toggle="modal"
+              data-bs-target="#confirmCloseModal"
+              data-ticket-id="{{ t.id }}"
+              data-asset="{{ t.asset_name }}"
+            >
+              เสร็จสิ้น
+            </button>
+          {% else %}
+            <span style="color:#9aa4b2;">—</span>
+          {% endif %}
+        </td>
+        {% endif %}
+
       </tr>
       {% else %}
       <tr>
-        <td colspan="4"
+        <td colspan="{% if current_user.role == 'admin' %}5{% else %}4{% endif %}"
             class="text-center"
             style="color:#9aa4b2; padding:32px;">
           ยังไม่มีรายการแจ้งซ่อม
@@ -86,5 +99,56 @@
   </table>
 
 </div>
+
+<!-- ================= CONFIRM MODAL ================= -->
+<div class="modal fade" id="confirmCloseModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content dark-card">
+
+      <div class="modal-header border-0">
+        <h5 class="modal-title">ยืนยันการปิดงาน</h5>
+        <button type="button" class="btn-close btn-close-white"
+                data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body" style="color:#cfd6dd;">
+        คุณต้องการปิดงานแจ้งซ่อมของครุภัณฑ์
+        <div class="fw-semibold mt-2" id="modalAssetName"></div>
+        ใช่หรือไม่?
+      </div>
+
+      <div class="modal-footer border-0">
+        <button type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal">
+          ยกเลิก
+        </button>
+
+        <form method="post" id="closeTicketForm">
+          <button type="submit"
+                  class="btn"
+                  style="background:#2e7d32; color:#fff;">
+            ยืนยันปิดงาน
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+  const modal = document.getElementById('confirmCloseModal');
+  modal.addEventListener('show.bs.modal', function (event) {
+    const button = event.relatedTarget;
+    const ticketId = button.getAttribute('data-ticket-id');
+    const assetName = button.getAttribute('data-asset');
+
+    document.getElementById('modalAssetName').innerText = assetName;
+    document.getElementById('closeTicketForm').action =
+      "{{ url_for('tickets.close_ticket', ticket_id=0) }}".replace("0", ticketId);
+  });
+</script>
 
 {% endblock %}

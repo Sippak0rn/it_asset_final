@@ -1,6 +1,7 @@
 from flask import Flask
 from extensions import db, login_manager
 from models import User
+from config import Config   # ✅ เพิ่มบรรทัดนี้
 
 
 def create_app():
@@ -9,11 +10,7 @@ def create_app():
     # ======================
     # CONFIG
     # ======================
-    app.config["SECRET_KEY"] = "dev-secret-key"
-    app.config["SQLALCHEMY_DATABASE_URI"] = (
-        "mysql+pymysql://root:1234@localhost/it_assets_db"
-    )
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config.from_object(Config)   # ✅ ใช้ Config แทนการ hardcode
 
     # ======================
     # INIT EXTENSIONS
@@ -42,7 +39,7 @@ def create_app():
     # REGISTER BLUEPRINTS
     # ======================
     app.register_blueprint(auth_bp)
-    app.register_blueprint(dashboard_bp)          # <-- หน้า /
+    app.register_blueprint(dashboard_bp)          # หน้า /
     app.register_blueprint(assets_bp, url_prefix="/assets")
     app.register_blueprint(checkouts_bp, url_prefix="/checkouts")
     app.register_blueprint(tickets_bp, url_prefix="/tickets")

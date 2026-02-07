@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, abort
 from flask_login import login_required, current_user
 from extensions import db
 
@@ -57,3 +57,27 @@ def create_ticket():
         "ticket_form.html",
         assets=assets
     )
+
+
+# =====================================================
+# ✅ ADMIN ONLY: ปิดงาน (เสร็จสิ้น)
+# =====================================================
+@tickets_bp.route("/close/<int:ticket_id>", methods=["POST"])
+@login_required
+def close_ticket(ticket_id):
+    # อนุญาตเฉพาะ admin
+    if current_user.role != "admin":
+        abort(403)
+
+    sql = """
+        UPDATE tickets
+        SET status = 'closed'
+        WHERE id = :ticket_id
+    """
+    db.session.execute(
+        db.text(sql),
+        {"ticket_id": ticket_id}
+    )
+    db.session.commit()
+
+    return redirect(url_for("tickets.list_tickets"))
