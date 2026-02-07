@@ -1,0 +1,195 @@
+{% extends "base_auth.html" %}
+{% set title = "Login / Register" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth_double.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="auth-wrap">
+  <div class="auth-shell {% if mode == 'register' %}is-register{% endif %}" id="authShell">
+
+    <div class="auth-panels">
+
+      <!-- ================= LOGIN ================= -->
+      <div class="auth-side">
+        <div class="auth-card">
+
+          <h1 class="auth-title">เข้าสู่ระบบ</h1>
+          <div class="auth-sub">ยินดีต้อนรับกลับมา 👋</div>
+
+          <form method="post" action="{{ url_for('auth.login') }}">
+            {{ login_form.csrf_token }}
+
+            <label>อีเมล</label>
+            {{ login_form.email(
+              class="form-control",
+              placeholder="name@example.com",
+              autocomplete="username"
+            ) }}
+            <div class="form-hint">ใช้อีเมลที่สมัครสมาชิกไว้</div>
+
+            <label class="mt-2">รหัสผ่าน</label>
+            {{ login_form.password(
+              class="form-control",
+              placeholder="••••••••",
+              autocomplete="current-password"
+            ) }}
+            <div class="form-hint">อย่างน้อย 4 ตัวอักษร</div>
+
+            <button class="btn btn-primary w-100 mt-3" type="submit">
+              เข้าสู่ระบบ
+            </button>
+
+            <div class="auth-actions">
+              <a class="auth-link" href="{{ url_for('auth.forgot_password') }}">
+                ลืมรหัสผ่าน?
+              </a>
+
+              <a href="#" class="auth-link" id="goRegister1">
+                สมัครสมาชิก
+              </a>
+            </div>
+          </form>
+
+        </div>
+      </div>
+
+      <!-- ================= REGISTER ================= -->
+      <div class="auth-side">
+        <div class="auth-card">
+
+          <h1 class="auth-title">สมัครสมาชิก</h1>
+          <div class="auth-sub">สร้างบัญชีเพื่อเริ่มใช้งานระบบ</div>
+
+          <form method="post" action="{{ url_for('auth.register') }}">
+            {{ register_form.csrf_token }}
+
+            <label>ชื่อ-สกุล</label>
+            {{ register_form.full_name(
+              class="form-control",
+              placeholder="เช่น สมชาย ใจดี",
+              autocomplete="name"
+            ) }}
+            <div class="form-hint">ชื่อจริงสำหรับแสดงในระบบ</div>
+
+            <label class="mt-2">อีเมล</label>
+            {{ register_form.email(
+              class="form-control",
+              placeholder="name@example.com",
+              autocomplete="username"
+            ) }}
+            <div class="form-hint">ใช้อีเมลสำหรับเข้าสู่ระบบ</div>
+
+            <label class="mt-2">รหัสผ่าน</label>
+            {{ register_form.password(
+              class="form-control",
+              placeholder="อย่างน้อย 4 ตัวอักษร",
+              autocomplete="new-password"
+            ) }}
+            <div class="form-hint">แนะนำให้ผสมตัวอักษรและตัวเลข</div>
+
+            <label class="mt-2">ยืนยันรหัสผ่าน</label>
+            {{ register_form.confirm(
+              class="form-control",
+              placeholder="พิมพ์รหัสผ่านอีกครั้ง",
+              autocomplete="new-password"
+            ) }}
+            <div class="form-hint">ต้องตรงกับรหัสผ่านด้านบน</div>
+
+            <button class="btn btn-primary w-100 mt-3" type="submit">
+              สมัครสมาชิก
+            </button>
+
+            <div class="auth-actions">
+              <span class="text-secondary small">
+                มีบัญชีแล้ว?
+              </span>
+              <button
+                class="btn btn-sm btn-outline-light"
+                type="button"
+                id="goLogin1">
+                เข้าสู่ระบบ
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ================= OVERLAY ================= -->
+    <div class="auth-overlay">
+      <div class="auth-overlay-inner">
+        <div class="auth-overlay-panel only-center">
+
+          <img
+            src="{{ url_for('static', filename='img/college_logo.png') }}"
+            class="auth-overlay-logo"
+            alt="logo">
+
+          <h2 class="auth-overlay-title">เริ่มต้นใช้งาน</h2>
+
+          <p class="auth-overlay-text">
+            สมัครสมาชิกเพื่อใช้งานระบบ<br>
+            จัดการครุภัณฑ์ ยืม-คืน และแจ้งซ่อม
+          </p>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(() => {
+  const shell = document.getElementById("authShell");
+
+  document.getElementById("goRegister1")?.addEventListener("click", e => {
+    e.preventDefault();
+    shell.classList.add("is-register");
+  });
+
+  document.getElementById("goLogin1")?.addEventListener("click", () => {
+    shell.classList.remove("is-register");
+  });
+})();
+</script>
+<!-- ✅ ADD: loading on submit (ไม่แตะโค้ดเดิม) -->
+<script>
+document.querySelectorAll("form").forEach(form => {
+  form.addEventListener("submit", e => {
+    const btn = form.querySelector("button[type=submit]");
+    if (!btn) return;
+
+    btn.classList.add("btn-loading");
+    btn.innerHTML = "กำลังดำเนินการ...";
+  });
+});
+</script>
+<script>
+document.querySelectorAll("form").forEach(form => {
+  form.addEventListener("submit", e => {
+    const btn = form.querySelector("button[type=submit]");
+    if (!btn || btn.classList.contains("btn-loading")) return;
+
+    e.preventDefault(); // ⛔ หยุด submit ก่อน
+
+    btn.classList.add("btn-loading");
+    const oldText = btn.innerHTML;
+    btn.innerHTML = "กำลังดำเนินการ...";
+
+    // ⏳ หน่วงเวลาให้ notification ได้โชว์
+    setTimeout(() => {
+      btn.innerHTML = oldText;
+      form.submit(); // ✅ ค่อย submit จริง
+    }, 1500); // ← ปรับได้: 1200 / 1500 / 1800
+  });
+});
+</script>
+
+{% endblock %}

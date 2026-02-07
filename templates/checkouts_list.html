@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header">
+  <h2 class="page-title">รายการเบิก–คืนครุภัณฑ์</h2>
+
+  <a href="{{ url_for('checkouts.new') }}" class="btn btn-warning">
+    + เบิกครุภัณฑ์
+  </a>
+</div>
+
+<div class="card dark-card checkouts-wrap">
+
+  <!-- ✅ FIX: hint อ่านง่ายขึ้น -->
+  <div class="mb-3 px-1"
+       style="color:#cfd6dd; font-size:0.9rem;">
+    แสดงรายการเบิก–คืนทั้งหมด • ผู้ดูแลระบบสามารถอนุมัติ ปฏิเสธ และบันทึกการคืนครุภัณฑ์
+  </div>
+
+  <table class="table dark-table align-middle">
+    <thead>
+      <tr>
+        <th style="width: 90px;">ID</th>
+        <th>ครุภัณฑ์</th>
+        <th style="width: 160px;">สถานะ</th>
+        <th style="width: 220px;">จัดการ</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for c in checkouts %}
+      <tr>
+
+        <!-- ✅ FIX: ID ชัด ไม่จาง -->
+        <td style="color:#eaeaea; font-weight:600;">
+          {{ c.id }}
+        </td>
+
+        <td class="fw-semibold">
+          {{ c.asset.name }}
+        </td>
+
+        <td>
+          {% if c.status == "approved" %}
+            <span class="badge"
+                  style="background:#1e88e5; color:#fff;">
+              อนุมัติแล้ว
+            </span>
+
+          {% elif c.status == "returned" %}
+            <span class="badge"
+                  style="background:#2e7d32; color:#fff;">
+              คืนแล้ว
+            </span>
+
+          {% elif c.status == "rejected" %}
+            <span class="badge"
+                  style="background:#c62828; color:#fff;">
+              ปฏิเสธ
+            </span>
+
+          {% elif c.status == "requested" %}
+            <span class="badge"
+                  style="background:#f9a825; color:#000;">
+              รออนุมัติ
+            </span>
+
+          {% else %}
+            <span class="badge badge-secondary">
+              {{ c.status }}
+            </span>
+          {% endif %}
+        </td>
+
+        <td>
+          {% if current_user.role == "admin" and c.status == "requested" %}
+
+            <form method="post"
+                  action="{{ url_for('checkouts.approve', id=c.id) }}"
+                  class="inline-form">
+              <button class="btn btn-success btn-sm"
+                      onclick="return confirm('ยืนยันการอนุมัติรายการนี้?')">
+                อนุมัติ
+              </button>
+            </form>
+
+            <form method="post"
+                  action="{{ url_for('checkouts.reject', id=c.id) }}"
+                  class="inline-form">
+              <button class="btn btn-danger btn-sm"
+                      onclick="return confirm('ยืนยันการปฏิเสธรายการนี้?')">
+                ปฏิเสธ
+              </button>
+            </form>
+
+          {% endif %}
+
+          {% if current_user.role == "admin" and c.status == "approved" %}
+
+            <form method="post"
+                  action="{{ url_for('checkouts.return_asset', id=c.id) }}"
+                  class="inline-form">
+              <button class="btn btn-warning btn-sm"
+                      onclick="return confirm('ยืนยันการคืนครุภัณฑ์นี้?')">
+                คืน
+              </button>
+            </form>
+
+          {% endif %}
+        </td>
+
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="4"
+            class="text-center"
+            style="color:#9aa4b2; padding:32px;">
+          ยังไม่มีรายการเบิก–คืนครุภัณฑ์
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+
+{% endblock %}

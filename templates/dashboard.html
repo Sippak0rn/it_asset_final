@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% set title = "Dashboard" %}
+{% block content %}
+
+<div class="d-flex align-items-end justify-content-between flex-wrap gap-2 mb-3">
+  <div>
+    <h1 class="h3 mb-1">Dashboard</h1>
+    <div class="text-secondary">
+      ภาพรวมระบบครุภัณฑ์ และรายการล่าสุด
+    </div>
+  </div>
+</div>
+
+<!-- SUMMARY -->
+<div class="row g-3 mb-3">
+  <div class="col-12 col-md-4">
+    <div class="card app-card">
+      <div class="card-body">
+        <div class="text-secondary small">ครุภัณฑ์ทั้งหมด</div>
+        <div class="display-6 fw-bold text-warning">
+          {{ total_assets or 0 }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-4">
+    <div class="card app-card">
+      <div class="card-body">
+        <div class="text-secondary small">กำลังใช้งาน</div>
+        <div class="display-6 fw-bold text-warning">
+          {{ in_use_assets or 0 }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-4">
+    <div class="card app-card">
+      <div class="card-body">
+        <div class="text-secondary small">แจ้งซ่อม (เปิดอยู่)</div>
+        <div class="display-6 fw-bold text-warning">
+          {{ open_tickets or 0 }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3">
+
+  <!-- STATUS SUMMARY -->
+  <div class="col-12 col-lg-4">
+    <div class="card app-card h-100">
+      <div class="card-body">
+        <div class="fw-bold mb-2">สรุปสถานะครุภัณฑ์</div>
+
+        {% if status_summary %}
+          <div class="vstack gap-2">
+            {% for s, c in status_summary.items() %}
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="badge app-pill
+                  {{ 'pill-success' if s=='new'
+                     else 'pill-info' if s=='in_use'
+                     else 'pill-warning' if s=='repair'
+                     else 'pill-danger' if s=='retired'
+                     else 'pill-muted' }}">
+                  {% if s=='new' %}พร้อมใช้งาน
+                  {% elif s=='in_use' %}กำลังใช้งาน
+                  {% elif s=='repair' %}ส่งซ่อม
+                  {% elif s=='retired' %}ปลดระวาง
+                  {% else %}ไม่ทราบสถานะ
+                  {% endif %}
+                </span>
+                <span class="fw-bold text-light">{{ c }}</span>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="text-secondary">ยังไม่มีข้อมูล</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- RECENT CHECKOUTS -->
+  <div class="col-12 col-lg-8">
+    <div class="card app-card">
+      <div class="card-body">
+
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <div class="fw-bold">รายการยืมที่ยังไม่คืน (ล่าสุด)</div>
+
+          <!-- ปุ่มทึบ -->
+          <a href="/checkouts/"
+             class="btn btn-sm"
+             style="background:#f9a825; color:#000;">
+            ดูทั้งหมด
+          </a>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-dark table-hover align-middle mb-0">
+            <thead>
+              <tr>
+                <th style="width:80px;">ID</th>
+                <th>ครุภัณฑ์</th>
+                <th>ผู้ยืม</th>
+                <th style="width:160px;">สถานะ</th>
+                <th style="width:140px;">กำหนดคืน</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% if recent_unreturned and recent_unreturned|length > 0 %}
+                {% for co in recent_unreturned %}
+                <tr>
+                  <td style="color:#eaeaea; font-weight:600;">
+                    {{ co.id }}
+                  </td>
+
+                  <td class="fw-semibold">
+                    {% if co.asset %}
+                      {{ co.asset.asset_tag }} - {{ co.asset.name }}
+                    {% else %}
+                      -
+                    {% endif %}
+                  </td>
+
+                  <td>
+                    {{ co.borrower.full_name if co.borrower else "-" }}
+                  </td>
+
+                  <td>
+                    <span class="badge app-pill {{ co.status_badge }}">
+                      {{ co.status_th }}
+                    </span>
+                  </td>
+
+                  <td style="color:#cfd6dd;">
+                    {{ co.due_date or "-" }}
+                  </td>
+                </tr>
+                {% endfor %}
+              {% else %}
+                <tr>
+                  <td colspan="5"
+                      class="text-center"
+                      style="color:#9aa4b2;">
+                    ไม่มีรายการ
+                  </td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header">
+  <h2 class="page-title">ประวัติการยืม–คืนครุภัณฑ์</h2>
+</div>
+
+<!-- TABLE -->
+<div class="card dark-card mb-3">
+
+  <table class="table dark-table align-middle">
+    <thead>
+      <tr>
+        <th style="width:80px;">ID</th>
+        <th>ครุภัณฑ์</th>
+        <th style="width:180px;">ผู้ยืม</th>
+        <th style="width:140px;">วันที่ยืม</th>
+        <th style="width:140px;">วันที่คืน</th>
+        <th style="width:140px;">สถานะ</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for c in history %}
+      <tr>
+
+        <td style="font-weight:600; color:#eaeaea;">
+          {{ c.id }}
+        </td>
+
+        <td class="fw-semibold">
+          {{ c.asset.name }}
+        </td>
+
+        <td>
+          {{ c.borrower.full_name }}
+        </td>
+
+        <td>
+          {{ c.checkout_date }}
+        </td>
+
+        <td>
+          {{ c.return_date or "-" }}
+        </td>
+
+        <!-- STATUS -->
+        <td>
+          {% if c.status == "returned" %}
+            <span class="badge"
+                  style="background:#2e7d32; color:#fff;">
+              คืนแล้ว
+            </span>
+          {% elif c.status == "rejected" %}
+            <span class="badge"
+                  style="background:#c62828; color:#fff;">
+              ปฏิเสธ
+            </span>
+          {% elif c.status == "approved" %}
+            <span class="badge"
+                  style="background:#f9a825; color:#000;">
+              อนุมัติ
+            </span>
+          {% else %}
+            <span class="badge badge-secondary">
+              ไม่ทราบสถานะ
+            </span>
+          {% endif %}
+        </td>
+
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="6"
+            class="text-center"
+            style="color:#9aa4b2; padding:32px;">
+          ไม่มีประวัติการยืม–คืน
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+
+<!-- ACTION -->
+<div class="d-flex justify-content-center">
+  <a href="{{ url_for('checkouts.index') }}"
+     class="btn"
+     style="background:#616161; color:#fff; padding:8px 28px;">
+    ย้อนกลับ
+  </a>
+</div>
+
+{% endblock %}

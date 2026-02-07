@@ -1,0 +1,17 @@
+{% extends "base_auth.html" %}
+{% set title = "Register" %}
+{% block content %}
+  <h1 class="h3 mb-3">สมัครสมาชิก</h1>
+  <form method="post" class="card p-3 p-md-4">
+    {{ form.csrf_token }}
+    <label>ชื่อ-สกุล</label>
+    {{ form.full_name(class="form-control") }}
+    <label>อีเมล</label>
+    {{ form.email(class="form-control") }}
+    <label>รหัสผ่าน</label>
+    {{ form.password(class="form-control") }}
+    <label>ยืนยันรหัสผ่าน</label>
+    {{ form.confirm(class="form-control") }}
+    {{ form.submit(class="btn btn-primary") }}
+  </form>
+{% endblock %}

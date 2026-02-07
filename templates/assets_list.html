@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header">
+  <h2 class="page-title">รายการครุภัณฑ์</h2>
+</div>
+
+<!-- SEARCH + ACTION -->
+<div class="card dark-card mb-3">
+  <form method="get">
+    <div class="d-flex flex-wrap gap-2 align-items-center">
+
+      <input
+        type="text"
+        name="q"
+        class="form-control"
+        style="max-width:360px;"
+        placeholder="ค้นหา Tag หรือชื่อ"
+        value="{{ q or '' }}"
+      >
+
+      <button class="btn btn-outline-warning">
+        ค้นหา
+      </button>
+
+      {% if current_user.role == 'admin' %}
+        <a href="{{ url_for('assets.create_asset') }}"
+           class="btn btn-warning ms-auto">
+          + เพิ่มครุภัณฑ์
+        </a>
+      {% endif %}
+    </div>
+  </form>
+</div>
+
+<!-- TABLE -->
+<div class="card dark-card">
+
+  <table class="table dark-table align-middle">
+    <thead>
+      <tr>
+        <th style="width:80px;">ID</th>
+        <th style="width:140px;">Tag</th>
+        <th>ชื่อ</th>
+        <th style="width:160px;">สถานะ</th>
+        {% if current_user.role == 'admin' %}
+          <th style="width:200px;" class="text-center">จัดการ</th>
+        {% endif %}
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for a in assets %}
+      <tr>
+
+        <td style="color:#eaeaea; font-weight:600;">
+          {{ a.id }}
+        </td>
+
+        <td style="color:#cfd6dd;">
+          {{ a.asset_tag }}
+        </td>
+
+        <td class="fw-semibold">
+          {{ a.name }}
+        </td>
+
+        <!-- STATUS (ไทย) -->
+        <td>
+          {% if a.status == 'new' %}
+            <span class="badge" style="background:#607d8b; color:#fff;">
+              ใหม่
+            </span>
+          {% elif a.status == 'available' %}
+            <span class="badge" style="background:#2e7d32; color:#fff;">
+              พร้อมใช้งาน
+            </span>
+          {% elif a.status == 'in_use' %}
+            <span class="badge" style="background:#1e88e5; color:#fff;">
+              กำลังใช้งาน
+            </span>
+          {% elif a.status == 'repair' %}
+            <span class="badge" style="background:#f9a825; color:#000;">
+              ส่งซ่อม
+            </span>
+          {% elif a.status == 'retired' %}
+            <span class="badge" style="background:#616161; color:#fff;">
+              ปลดระวาง
+            </span>
+          {% else %}
+            <span class="badge badge-secondary">
+              ไม่ทราบสถานะ
+            </span>
+          {% endif %}
+        </td>
+
+        {% if current_user.role == 'admin' %}
+        <td class="text-center">
+
+          <!-- ✅ ปุ่มทึบ -->
+          <a href="{{ url_for('assets.edit_asset', asset_id=a.id) }}"
+             class="btn btn-sm"
+             style="background:#0288d1; color:#fff; margin-right:6px;">
+            แก้ไข
+          </a>
+
+          <form method="post"
+                action="{{ url_for('assets.delete_asset', asset_id=a.id) }}"
+                style="display:inline"
+                onsubmit="return confirm('ยืนยันการลบครุภัณฑ์นี้?');">
+            <button class="btn btn-sm"
+                    style="background:#c62828; color:#fff;">
+              ลบ
+            </button>
+          </form>
+
+        </td>
+        {% endif %}
+
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="6"
+            class="text-center"
+            style="color:#9aa4b2; padding:32px;">
+          ไม่มีข้อมูลครุภัณฑ์
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header text-center">
+  <h2 class="page-title">แจ้งซ่อมครุภัณฑ์</h2>
+</div>
+
+<div class="d-flex justify-content-center">
+
+  <div class="card dark-card w-100"
+       style="max-width:720px;">
+
+    <!-- ✅ HINT ชัดขึ้น -->
+    <div class="mb-4"
+         style="
+           background: rgba(255,255,255,0.05);
+           border: 1px solid rgba(255,255,255,0.08);
+           border-radius: 10px;
+           padding: 14px 16px;
+           color: #e0e6ed;
+           font-size: 0.9rem;
+           line-height: 1.6;
+         ">
+      กรุณาเลือกครุภัณฑ์และอธิบายอาการหรือปัญหาที่พบ  
+      ระบบจะบันทึกรายการแจ้งซ่อมเพื่อให้ผู้ดูแลระบบดำเนินการต่อไป
+    </div>
+
+    <form method="post">
+
+      <!-- ครุภัณฑ์ -->
+      <div class="mb-3">
+        <label class="form-label">ครุภัณฑ์</label>
+        <select name="asset_id"
+                class="form-select"
+                required>
+          {% for a in assets %}
+            <option value="{{ a.id }}">
+              {{ a.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- อาการ -->
+      <div class="mb-4">
+        <label class="form-label">อาการ / ปัญหา</label>
+        <textarea
+          name="issue"
+          class="form-control"
+          rows="4"
+          required
+          placeholder="เช่น เปิดไม่ติด, เครื่องร้อนผิดปกติ, มีเสียงดัง, ใช้งานไม่ได้ ฯลฯ"
+          style="color:#000;"
+        ></textarea>
+
+        <!-- hint ใต้ textarea -->
+        <div style="margin-top:6px; font-size:0.8rem; color:#cfd6dd;">
+          ยิ่งอธิบายละเอียด จะช่วยให้แก้ไขได้เร็วขึ้น
+        </div>
+      </div>
+
+      <!-- ปุ่ม -->
+      <div class="d-flex justify-content-center gap-2">
+        <button class="btn"
+                style="background:#2e7d32; color:#fff; padding:8px 28px;">
+          บันทึก
+        </button>
+
+        <a href="{{ url_for('tickets.list_tickets') }}"
+           class="btn"
+           style="background:#616161; color:#fff; padding:8px 28px;">
+          ยกเลิก
+        </a>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+{% endblock %}

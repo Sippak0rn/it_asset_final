@@ -1,0 +1,39 @@
+{% extends "base_auth.html" %}
+{% set title = "Login" %}
+{% block content %}
+  <div class="login-wrap">
+    <div class="app-card login-card app-animate-in">
+      <div class="login-hero">
+        <div class="logo">
+          <img src="{{ url_for('static', filename='img/college_logo.png') }}" alt="College">
+          <div>
+            <h1>เข้าสู่ระบบ</h1>
+            <p>ระบบบริหารจัดการครุภัณฑ์ (IT Assets)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="login-form">
+        <form method="post" class="row g-3">
+          {{ form.csrf_token }}
+          <div class="col-12">
+            <label class="form-label text-secondary">อีเมล</label>
+            {{ form.email(class="form-control", placeholder="name@example.com") }}
+          </div>
+          <div class="col-12">
+            <label class="form-label text-secondary">รหัสผ่าน</label>
+            {{ form.password(class="form-control", placeholder="••••••••") }}
+          </div>
+          <div class="col-12 d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <button class="btn btn-primary app-btn" type="submit" style="min-width: 160px;">เข้าสู่ระบบ</button>
+            <div class="small">
+              <a href="{{ url_for('auth.forgot_password') }}">ลืมรหัสผ่าน</a>
+              <span class="text-secondary mx-2">|</span>
+              <a href="{{ url_for('auth.register') }}">สมัครสมาชิก</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

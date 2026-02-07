@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header text-center">
+  <h2 class="page-title">เปิดครุภัณฑ์</h2>
+</div>
+
+<!-- ✅ CENTER WRAPPER -->
+<div class="d-flex justify-content-center">
+
+  <!-- จำกัดความกว้าง + การ์ด -->
+  <div class="card dark-card w-100"
+       style="max-width:640px;">
+
+    <!-- คำอธิบาย -->
+    <div class="mb-3"
+         style="color:#cfd6dd; font-size:0.9rem;">
+      กรุณาเลือกครุภัณฑ์และกำหนดวันที่ต้องการคืน  
+      ระบบจะส่งคำขอให้ผู้ดูแลระบบพิจารณาอนุมัติ
+    </div>
+
+    <form method="post">
+
+      <!-- เลือกครุภัณฑ์ -->
+      <div class="mb-3">
+        <label class="form-label">เลือกครุภัณฑ์</label>
+        <select name="asset_id" class="form-select" required>
+          <option value="">-- เลือก --</option>
+          {% for asset in assets %}
+            <option value="{{ asset.id }}">
+              {{ asset.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- วันที่คืน -->
+      <div class="mb-4">
+        <label class="form-label">วันที่คืน</label>
+        <input
+          type="date"
+          name="return_date"
+          class="form-control"
+          required
+        >
+        <div style="font-size:0.8rem; color:#9aa4b2; margin-top:4px;">
+          เลือกวันที่คาดว่าจะนำครุภัณฑ์มาคืน
+        </div>
+      </div>
+
+      <!-- ปุ่ม -->
+      <div class="d-flex justify-content-center gap-2">
+        <button type="submit" class="btn btn-warning px-4">
+          ส่งคำขอ
+        </button>
+
+        <a href="{{ url_for('checkouts.index') }}"
+           class="btn btn-secondary px-4">
+          ยกเลิก
+        </a>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+{% endblock %}

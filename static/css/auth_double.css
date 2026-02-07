@@ -1,0 +1,536 @@
+/* ===============================
+   FONT
+=============================== */
+:root{
+  --font-ui: 'IBM Plex Sans Thai', system-ui, sans-serif;
+  --font-head: 'Inter', system-ui, sans-serif;
+}
+
+.auth-wrap{
+  font-family:var(--font-ui);
+}
+
+/* ===============================
+   BACKGROUND
+=============================== */
+.auth-wrap{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(circle at 18% 12%, #ff8a50 0%, #3a2217 38%, #0b0c10 72%);
+}
+
+/* ===============================
+   SHELL
+=============================== */
+.auth-shell{
+  position:relative;
+  width:980px;
+  max-width:96%;
+  height:560px;
+  background:rgba(15,17,23,.94);
+  border-radius:26px;
+  overflow:hidden;
+  box-shadow:
+    0 50px 140px rgba(0,0,0,.7),
+    inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+/* ===============================
+   PANELS
+=============================== */
+.auth-panels{
+  display:flex;
+  height:100%;
+  position:relative;
+  z-index:2;
+}
+
+.auth-side{
+  width:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:
+    transform .75s cubic-bezier(.2,.8,.2,1),
+    opacity .45s ease;
+}
+
+/* ===============================
+   CARD
+=============================== */
+.auth-card{
+  width:86%;
+  background:
+    linear-gradient(180deg,
+      rgba(36,38,48,.96),
+      rgba(22,24,32,.96)
+    );
+  padding:30px 30px 28px;
+  border-radius:22px;
+  box-shadow:
+    0 30px 70px rgba(0,0,0,.55),
+    inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+/* ===============================
+   TITLES
+=============================== */
+.auth-title{
+  font-family:var(--font-head);
+  font-weight:800;
+  font-size:1.55rem;
+  letter-spacing:.2px;
+}
+
+.auth-sub{
+  color:#c3c9d6;
+  margin-bottom:16px;
+  font-size:.95rem;
+}
+
+/* ===============================
+   FORM
+=============================== */
+.auth-card label{
+  font-size:.85rem;
+  font-weight:500;
+  color:#e1e4ee;
+}
+
+.auth-card .form-control{
+  background:#0f1117;
+  border:1px solid rgba(255,255,255,.08);
+  color:#fff;
+  border-radius:12px;
+  padding:10px 14px;
+}
+
+.auth-card .form-control:focus{
+  background:#0f1117;
+  border-color:#ff9a63;
+  box-shadow:0 0 0 3px rgba(255,154,99,.15);
+}
+
+/* ===============================
+   HINT
+=============================== */
+.form-hint{
+  font-size:12px;
+  color:#c1c7d6;
+  margin-top:4px;
+}
+
+/* ===============================
+   ACTIONS
+=============================== */
+.auth-actions{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:20px;
+}
+
+.auth-link{
+  color:#ffb36b;
+  font-weight:600;
+  text-decoration:none;
+}
+.auth-link:hover{ text-decoration:underline }
+
+/* ===============================
+   BUTTONS
+=============================== */
+.auth-card .btn-primary{
+  background:linear-gradient(135deg,#ff8f57,#ffb36b);
+  border:none;
+  color:#1a1a1a;
+  font-weight:700;
+  border-radius:12px;
+  padding:10px 18px;
+}
+
+.auth-card .btn-primary:hover{
+  filter:brightness(1.05);
+}
+
+/* ===============================
+   OVERLAY
+=============================== */
+.auth-overlay{
+  position:absolute;
+  top:0;
+  left:50%;
+  width:50%;
+  height:100%;
+  transition:transform .75s cubic-bezier(.2,.8,.2,1);
+  z-index:5;
+}
+
+.auth-overlay-inner{
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:44px;
+  background:
+    linear-gradient(135deg,
+      #ff874a 0%,
+      #d66532 35%,
+      #14151a 100%);
+}
+
+/* ===============================
+   OVERLAY CONTENT
+=============================== */
+.auth-overlay-panel.only-center{
+  text-align:center;
+  max-width:320px;
+  color:#fff;
+}
+
+.auth-overlay-logo{
+  width:88px;
+  margin-bottom:18px;
+  filter:drop-shadow(0 10px 26px rgba(0,0,0,.45));
+}
+
+.auth-overlay-title{
+  font-family:var(--font-head);
+  font-size:1.9rem;
+  font-weight:600;
+  margin-bottom:12px;
+}
+
+.auth-overlay-text{
+  font-size:.95rem;
+  line-height:1.65;
+  opacity:.92;
+}
+
+/* ===============================
+   GHOST BUTTON
+=============================== */
+.auth-ghost{
+  margin-top:8px;
+  padding:10px 32px;
+  border-radius:999px;
+  border:1.5px solid rgba(255,255,255,.75);
+  background:transparent;
+  color:#fff;
+  font-size:.95rem;
+  font-weight:600;
+  cursor:pointer;
+  transition:all .25s ease;
+}
+
+.auth-ghost:hover{
+  background:rgba(255,255,255,.14);
+  transform:translateY(-1px);
+}
+
+/* ===============================
+   STATES
+=============================== */
+.auth-shell.is-register .auth-overlay{
+  transform:translateX(-100%);
+}
+
+.auth-shell.is-register .auth-side:first-child{
+  transform:translateX(100%);
+  opacity:0;
+  pointer-events:none;
+}
+
+.auth-shell:not(.is-register) .auth-side:last-child{
+  transform:translateX(-100%);
+  opacity:0;
+  pointer-events:none;
+}
+/* ================= REGISTER CARD BALANCE ================= */
+
+/* การ์ดสมัครสมาชิก */
+.auth-shell.is-register .auth-side:last-child .auth-card {
+  max-height: 420px;          /* 🔑 คุมความสูง */
+  overflow-y: auto;           /* 🔑 scroll เฉพาะการ์ด */
+  padding: 22px 24px;         /* ลดแนวตั้ง */
+}
+
+/* scrollbar เนียน ๆ */
+.auth-shell.is-register
+.auth-side:last-child
+.auth-card::-webkit-scrollbar {
+  width: 6px;
+}
+.auth-shell.is-register
+.auth-side:last-child
+.auth-card::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,.15);
+  border-radius: 10px;
+}
+
+/* ลดระยะ label → input */
+.auth-shell.is-register label {
+  font-size: .9rem;
+  margin-bottom: 4px;
+}
+
+/* ลด hint ให้เบาลง */
+.auth-shell.is-register .form-hint {
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+/* ปุ่มสมัครสมาชิกไม่ต้องอ้วนเกิน */
+.auth-shell.is-register .btn-primary {
+  padding: 10px;
+  font-size: .95rem;
+}
+/* ================= SLIDE FIX (NO GHOST) ================= */
+
+/* ป้องกัน render หลุด */
+.auth-side {
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+/* LOGIN -> REGISTER */
+.auth-shell.is-register .auth-side:first-child {
+  transform: translateX(100%);
+  opacity: 0;
+  visibility: hidden;       /* 🔑 ตัดการ render */
+  pointer-events: none;
+}
+
+/* REGISTER -> LOGIN */
+.auth-shell:not(.is-register) .auth-side:last-child {
+  transform: translateX(-100%);
+  opacity: 0;
+  visibility: hidden;       /* 🔑 ตัดการ render */
+  pointer-events: none;
+}
+
+/* ฝั่งที่ active */
+.auth-shell.is-register .auth-side:last-child,
+.auth-shell:not(.is-register) .auth-side:first-child {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.auth-card,
+.auth-overlay {
+  transform: translateZ(0);
+}
+.auth-overlay {
+  z-index: 10;
+}
+.auth-panels {
+  z-index: 5;
+}
+/* ===== Primary Action Button ===== */
+.auth-card .btn-primary {
+  background: linear-gradient(135deg, #ff9f66, #ff7a3d);
+  border: none;
+  color: #1b1b1b;
+  font-weight: 800;
+  border-radius: 999px;
+  padding: 12px 0;
+  width: 100%;
+  transition: all .25s ease;
+  box-shadow: 0 8px 22px rgba(255,140,80,.35);
+}
+
+.auth-card .btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(255,140,80,.45);
+}
+/* ===== Secondary Switch Button ===== */
+.auth-card .btn-outline-light {
+  border: 1.5px solid #444;
+  color: #ccc;
+  background: transparent;
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-weight: 700;
+  transition: all .25s ease;
+}
+
+.auth-card .btn-outline-light:hover {
+  background: #2a2d36;
+  color: #fff;
+}
+/* ===== Interactive Text ===== */
+.auth-link {
+  color: #ff9f66;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+
+/* ===== Passive Text ===== */
+.auth-muted {
+  color: #8b8f99;
+}
+.auth-actions .auth-link {
+  font-size: .9rem;
+}
+.auth-actions .auth-link {
+  font-size: .9rem;
+}
+.auth-side {
+  will-change: transform, opacity;
+}
+
+/* ฝั่งที่ไม่ active = ซ่อนจริง */
+.auth-shell.is-register .auth-side:first-child,
+.auth-shell:not(.is-register) .auth-side:last-child {
+  opacity: 0;
+  pointer-events: none;
+  filter: blur(4px);
+}
+/* ================= FORGOT PASSWORD ================= */
+
+.auth-shell.auth-single {
+  width: 420px;
+  height: auto;
+  padding: 0;
+}
+
+.auth-forgot {
+  width: 100%;
+  max-width: 420px;
+  padding: 36px;
+  text-align: center;
+}
+
+/* icon */
+.auth-icon {
+  font-size: 38px;
+  margin-bottom: 10px;
+  opacity: .9;
+}
+
+/* subtitle */
+.auth-forgot .auth-sub {
+  font-size: .95rem;
+  line-height: 1.6;
+  color: #b7beca;
+  margin-bottom: 18px;
+}
+
+/* button already orange from system */
+.auth-forgot .btn-primary {
+  margin-top: 18px;
+}
+
+/* footer */
+.auth-footer {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  font-size: .9rem;
+}
+/* ================= BUTTON LOADING ================= */
+.btn-loading {
+  pointer-events: none;
+  opacity: .85;
+  position: relative;
+}
+
+.btn-loading::after {
+  content: "";
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: spin .7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: translateY(-50%) rotate(360deg); }
+}
+/* ================= CARD ANIMATION ================= */
+.auth-card {
+  animation: cardIn .5s ease forwards;
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* ================= CARD ANIMATION ================= */
+.auth-card {
+  animation: cardIn .5s ease forwards;
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* ================= ERROR SHAKE ================= */
+.is-error {
+  animation: shake .35s ease;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-3px); }
+  100% { transform: translateX(0); }
+}
+/* ================= BUTTON LOADING ================= */
+.btn-loading {
+  pointer-events: none;
+  opacity: .85;
+  position: relative;
+}
+
+.btn-loading::after {
+  content: "";
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: spin .7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: translateY(-50%) rotate(360deg); }
+}
+/* ================= AUTH FONT ================= */
+.auth-wrap,
+.auth-wrap input,
+.auth-wrap button,
+.auth-wrap label,
+.auth-wrap a {
+  font-family: "Kanit", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}

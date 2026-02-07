@@ -1,0 +1,1203 @@
+/* =========================
+   GLOBAL
+========================= */
+:root {
+  --bg-main: #0f1115;
+  --bg-card: #171b22;
+  --bg-soft: #1f2430;
+
+  --gold: #f5b301;
+  --gold-soft: #ffd166;
+
+  --green: #2ecc71;
+  --red: #e74c3c;
+  --blue: #4fc3f7;
+
+  --text-main: #e8e9eb;
+  --text-muted: #9aa4b2;
+
+  --border-soft: rgba(255,255,255,0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: radial-gradient(
+    circle at top left,
+    #1a1f27 0%,
+    var(--bg-main) 60%
+  );
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+.navbar {
+  background: linear-gradient(90deg, #0c0e12, #151922);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.navbar a {
+  color: var(--text-muted);
+  text-decoration: none;
+  margin-right: 18px;
+  font-weight: 500;
+}
+
+.navbar a.active,
+.navbar a:hover {
+  color: var(--gold);
+}
+
+.role-badge {
+  background: rgba(245,179,1,0.15);
+  color: var(--gold);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+/* =========================
+   PAGE HEADER
+========================= */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.page-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #f2f3f5;
+}
+
+/* =========================
+   CARDS
+========================= */
+.card,
+.dark-card,
+.app-card {
+  background: linear-gradient(180deg, var(--bg-card), #141821);
+  border-radius: 14px;
+  padding: 20px;
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.35);
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.card:hover,
+.dark-card:hover,
+.app-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.45);
+  border-color: rgba(245,179,1,0.35);
+}
+
+.card h3 {
+  margin-top: 0;
+  font-size: 18px;
+  color: var(--gold);
+}
+
+/* =========================
+   DASHBOARD STATS
+========================= */
+.stat-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stat-number,
+.display-6 {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+/* =========================
+   TABLE
+========================= */
+.table,
+.dark-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.table th,
+.dark-table thead th {
+  text-align: left;
+  font-size: 14px;
+  color: var(--gold);
+  padding: 12px;
+  background: #1b2028;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.table td,
+.dark-table tbody td {
+  padding: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  color: var(--text-main);
+}
+
+.table tr:nth-child(even),
+.dark-table tbody tr:nth-child(even) {
+  background: rgba(255,255,255,0.03);
+}
+
+.table tr,
+.dark-table tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.table tr:hover,
+.dark-table tbody tr:hover {
+  background: rgba(245,179,1,0.06);
+}
+
+/* =========================
+   BADGES / PILLS
+========================= */
+.badge,
+.app-pill {
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+
+  transition: filter 0.15s ease;
+}
+
+.badge:hover,
+.app-pill:hover {
+  filter: brightness(1.1);
+}
+
+.badge-new,
+.badge-secondary,
+.pill-muted {
+  background: #5f6a77;
+  color: #fff;
+}
+
+.badge-open,
+.badge-approved,
+.pill-warning {
+  background: rgba(245,179,1,0.25);
+  color: var(--gold);
+}
+
+.badge-returned,
+.badge-success,
+.pill-success {
+  background: rgba(46,204,113,0.25);
+  color: var(--green);
+}
+
+.badge-rejected,
+.badge-closed,
+.badge-danger,
+.pill-danger {
+  background: rgba(231,76,60,0.25);
+  color: var(--red);
+}
+
+.pill-info {
+  background: rgba(79,195,247,0.25);
+  color: var(--blue);
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.btn,
+.app-btn {
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.btn-primary {
+  background: var(--gold);
+  color: #000;
+  border: none;
+}
+
+.btn-primary:hover {
+  background: var(--gold-soft);
+}
+
+.btn-success {
+  background: var(--green);
+  color: #000;
+  border: none;
+}
+
+.btn-danger {
+  background: var(--red);
+  color: #fff;
+  border: none;
+}
+
+.btn-outline,
+.app-btn {
+  background: transparent;
+  border: 1px solid rgba(245,179,1,0.5);
+  color: var(--gold);
+}
+
+.btn-outline:hover,
+.app-btn:hover {
+  background: rgba(245,179,1,0.15);
+  color: var(--gold-soft);
+}
+
+/* =========================
+   FORM
+========================= */
+.form-group {
+  margin-bottom: 16px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--bg-soft);
+  border: 1px solid var(--border-soft);
+  color: var(--text-main);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* =========================
+   FOOTER / BACK BUTTON
+========================= */
+.btn-back {
+  width: 100%;
+  margin-top: 20px;
+  background: #6c757d;
+  color: #fff;
+}
+
+.inline-form {
+  display: inline-block;
+  margin-right: 6px;
+}
+/* =========================
+   CHECKOUTS TABLE FIX
+========================= */
+
+/* ครอบ table ให้เป็น card */
+.checkouts-wrap {
+  background: linear-gradient(180deg, #181c22, #141821);
+  border-radius: 14px;
+  padding: 16px;
+  border: 1px solid rgba(245,179,1,0.25);
+}
+
+/* table ไม่ขาว */
+.checkouts-wrap table {
+  background: transparent;
+}
+
+/* header */
+.checkouts-wrap thead th {
+  background: #1f2430;
+  color: #f5b301;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+/* row */
+.checkouts-wrap tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.checkouts-wrap tbody tr:hover {
+  background: rgba(245,179,1,0.06);
+}
+
+/* cell */
+.checkouts-wrap td {
+  color: #e8e9eb;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+/* ปุ่มคืน */
+.btn-return {
+  background: #f5b301;
+  color: #000;
+  border-radius: 10px;
+  padding: 6px 14px;
+  font-weight: 600;
+}
+
+.btn-return:hover {
+  background: #ffd166;
+}
+/* =========================
+   NOTIFICATION
+========================= */
+#notify-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.notify {
+  min-width: 260px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  color: #fff;
+  font-weight: 500;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+  animation: slideIn 0.25s ease;
+}
+
+.notify.success { background: #2ecc71; color: #000; }
+.notify.error   { background: #e74c3c; }
+.notify.info    { background: #3498db; }
+.notify.warn    { background: #f5b301; color: #000; }
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+/* =========================
+   FORCE DARK TABLE (Bootstrap Override)
+========================= */
+
+/* ยกเลิก background ขาวของ Bootstrap */
+.dark-table > :not(caption) > * > * {
+  background-color: #1f2428 !important;
+  color: #eaeaea;
+}
+
+/* แถวสลับสี */
+.dark-table tbody tr:nth-child(even) > * {
+  background-color: #23292e !important;
+}
+
+/* hover */
+.dark-table tbody tr:hover > * {
+  background-color: #2b3238 !important;
+}
+
+/* เส้นแบ่ง */
+.dark-table td,
+.dark-table th {
+  border-color: rgba(255,255,255,0.08);
+}
+/* =========================
+   HINT / HELP TEXT (GLOBAL FIX)
+========================= */
+
+/* ข้อความอธิบาย / hint ใต้หัวข้อ */
+.hint,
+.form-hint,
+.help-text {
+  color: #d1d7df;              /* สว่างกว่า text-secondary */
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* ใช้กับข้อความเล็กใต้หัวข้อ เช่น Dashboard */
+.text-secondary {
+  color: #b8c0cc !important;   /* เดิมมันมืดเกิน */
+}
+
+/* placeholder ให้ชัดขึ้น */
+input::placeholder,
+textarea::placeholder {
+  color: #9fa8b3;
+  opacity: 1;
+}
+
+/* กล่อง hint (แบบที่เราใช้ใน ticket_form) */
+.hint-box {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 14px 16px;
+  color: #e2e8f0;
+  font-size: 0.9rem;
+}
+
+/* hint ในตาราง (เช่น ไม่มีข้อมูล) */
+.table .text-muted,
+.table .no-data {
+  color: #b5bec9 !important;
+}
+/* =========================
+   EMPTY / NO-DATA TEXT FIX
+========================= */
+
+/* ข้อความประเภท: ยังไม่มีข้อมูล / ไม่มีรายการ */
+.no-data,
+.empty-text,
+.text-empty {
+  color: #e0e6ed !important;
+  font-size: 0.95rem;
+}
+
+/* เผื่อกรณีไม่ได้ใส่ class (แบบใน dashboard) */
+.card .text-secondary,
+.card .text-muted {
+  color: #d5dbe3 !important;
+}
+
+/* ตาราง: แถวที่ไม่มีข้อมูล */
+.table td.text-secondary,
+.table td.text-muted {
+  color: #d5dbe3 !important;
+}
+
+/* ข้อความกลาง card (เช่น "ยังไม่มีข้อมูล") */
+.card-body > .text-secondary,
+.card-body > .text-muted {
+  color: #e2e8f0 !important;
+}
+
+/* ทำให้หัวข้อรอง (subtitle) ชัดขึ้น */
+.card-body .small,
+.card-body small {
+  color: #cfd6dd;
+}
+/* =========================
+   FORCE READABLE TEXT (FINAL FIX)
+========================= */
+
+/* ข้อความธรรมดาใน card ที่ไม่มี class */
+.app-card,
+.card.bg-dark {
+  color: #e6ebf2;
+}
+
+/* ข้อความในตารางที่ไม่มีข้อมูล */
+.table-dark td,
+.table-dark th {
+  color: #e6ebf2;
+}
+
+/* กรณีแถว "ไม่มีรายการ" */
+.table-dark td[colspan] {
+  color: #e6ebf2 !important;
+  text-align: center;
+}
+
+/* ข้อความสถานะว่างใน dashboard */
+.app-card div:not(.fw-bold):not(.display-6) {
+  color: #dce2ea;
+}
+
+/* กัน Bootstrap กดสีเทาทับ */
+.text-muted,
+.text-secondary {
+  color: #dce2ea !important;
+}
+/* =========================
+   PRO NAVBAR ANIMATION
+========================= */
+
+.app-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  background: linear-gradient(
+    180deg,
+    rgba(10,14,20,0.85),
+    rgba(10,14,20,0.65)
+  );
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 193, 7, 0.15);
+  box-shadow:
+    0 0 0 transparent,
+    0 10px 40px rgba(0,0,0,.6);
+  animation: navGlow 6s ease-in-out infinite;
+}
+
+/* Glow breathing */
+@keyframes navGlow {
+  0%,100% {
+    box-shadow:
+      0 0 0 transparent,
+      0 10px 40px rgba(0,0,0,.6);
+  }
+  50% {
+    box-shadow:
+      0 0 25px rgba(255,193,7,.15),
+      0 14px 55px rgba(0,0,0,.75);
+  }
+}
+
+/* =========================
+   NAV LINK ANIMATION
+========================= */
+
+.app-navbar .nav-link {
+  position: relative;
+  color: #cfd6dd;
+  font-weight: 500;
+  padding: .6rem .9rem;
+  transition:
+    color .25s ease,
+    transform .25s ease;
+}
+
+/* underline */
+.app-navbar .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #ffc107,
+    transparent
+  );
+  transition: all .35s ease;
+  transform: translateX(-50%);
+}
+
+/* hover */
+.app-navbar .nav-link:hover {
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.app-navbar .nav-link:hover::after {
+  width: 70%;
+}
+
+/* active */
+.app-navbar .nav-link.active {
+  color: #ffc107;
+}
+
+.app-navbar .nav-link.active::after {
+  width: 80%;
+  box-shadow: 0 0 12px rgba(255,193,7,.6);
+}
+
+/* =========================
+   BRAND – SMOOTH SHIMMER
+========================= */
+
+.app-navbar .navbar-brand {
+  position: relative;
+  font-weight: 700;
+  letter-spacing: .3px;
+  color: #ffcc4d;
+  overflow: hidden;
+}
+
+/* shimmer overlay */
+.app-navbar .navbar-brand::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 20%,
+    rgba(255, 193, 7, 0.18) 45%,
+    rgba(255, 193, 7, 0.28) 50%,
+    rgba(255, 193, 7, 0.18) 55%,
+    transparent 80%
+  );
+  transform: translateX(-120%);
+  animation: brandShimmerSoft 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* shimmer motion */
+@keyframes brandShimmerSoft {
+  0%   { transform: translateX(-120%); opacity: .3; }
+  35%  { opacity: .6; }
+  55%  { transform: translateX(120%); opacity: .3; }
+  100% { transform: translateX(120%); opacity: 0; }
+}
+
+/* =========================
+   RIGHT SIDE INFO
+========================= */
+
+.app-navbar .badge,
+.app-navbar .small {
+  transition: color .3s ease;
+}
+
+.app-navbar:hover .badge {
+  color: #ffc107;
+}
+
+/* =========================
+   MOBILE MENU ANIMATION
+========================= */
+
+.navbar-collapse {
+  transition: transform .35s ease, opacity .35s ease;
+}
+
+.navbar-collapse.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* =========================
+   REDUCE MOTION SUPPORT
+========================= */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+/* =========================
+   NAVBAR – GLASS PRO
+========================= */
+
+.app-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  backdrop-filter: blur(14px);
+  background: linear-gradient(
+    180deg,
+    rgba(12, 15, 20, 0.92),
+    rgba(10, 12, 16, 0.85)
+  );
+  border-bottom: 1px solid rgba(255, 193, 7, 0.08);
+  box-shadow: 0 10px 40px rgba(0,0,0,.45);
+}
+/* =========================
+   BRAND – SMOOTH SHIMMER
+========================= */
+
+.app-navbar .navbar-brand {
+  position: relative;
+  font-weight: 700;
+  color: #ffcc4d;
+  letter-spacing: .4px;
+  overflow: hidden;
+}
+
+/* shimmer layer */
+.app-navbar .navbar-brand::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 25%,
+    rgba(255, 193, 7, 0.18) 45%,
+    rgba(255, 193, 7, 0.28) 50%,
+    rgba(255, 193, 7, 0.18) 55%,
+    transparent 75%
+  );
+  transform: translateX(-120%);
+  animation: brandShimmerSoft 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes brandShimmerSoft {
+  0%   { transform: translateX(-120%); opacity: .25; }
+  40%  { opacity: .55; }
+  60%  { transform: translateX(120%); opacity: .25; }
+  100% { transform: translateX(120%); opacity: 0; }
+}
+.app-navbar .navbar-brand {
+  text-shadow:
+    0 0 12px rgba(255,193,7,.25),
+    0 0 22px rgba(255,193,7,.15);
+}
+/* =========================
+   NAV MENU – GOLD UNDERLINE
+========================= */
+
+.app-navbar .nav-link {
+  position: relative;
+  color: #cfd6dd;
+  transition: color .3s ease;
+}
+
+.app-navbar .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #ffcc4d,
+    transparent
+  );
+  transition: all .4s ease;
+  transform: translateX(-50%);
+}
+
+.app-navbar .nav-link:hover {
+  color: #ffcc4d;
+}
+
+.app-navbar .nav-link:hover::after {
+  width: 120%;
+}
+.app-navbar .nav-link.active {
+  color: #ffcc4d;
+  text-shadow: 0 0 10px rgba(255,193,7,.35);
+}
+/* =========================
+   LOGOUT BUTTON
+========================= */
+
+.app-navbar .btn-logout {
+  border: 1px solid rgba(255,193,7,.5);
+  color: #ffcc4d;
+  background: transparent;
+  transition: all .35s ease;
+}
+
+.app-navbar .btn-logout:hover {
+  background: rgba(255,193,7,.15);
+  box-shadow: 0 0 18px rgba(255,193,7,.45);
+  transform: translateY(-1px);
+}
+/* =========================
+   FIX ROLE / USER INFO HOVER
+========================= */
+
+/* ตัวหนังสือ Role / Username */
+.navbar .user-info,
+.navbar .user-info *,
+.navbar .role-text {
+  color: #cfd6dd !important;
+  text-shadow: none !important;
+  background: none !important;
+  filter: none !important;
+  animation: none !important;
+  transition: none !important;
+  pointer-events: none; /* ไม่รับ hover */
+}
+
+/* กันเงา / shimmer จาก parent */
+.navbar .user-info::before,
+.navbar .user-info::after {
+  display: none !important;
+}
+/* ป้องกัน hover effect ไปโดน text ธรรมดา */
+.navbar span:not(.btn):not(.nav-link) {
+  pointer-events: none;
+  text-shadow: none !important;
+}
+/* ===============================
+   HARD FIX: STOP NAVBAR HOVER BLEED
+=============================== */
+
+/* กล่องฝั่งขวา (role + user) */
+.navbar .navbar-right,
+.navbar .navbar-right * {
+  animation: none !important;
+  transition: none !important;
+  filter: none !important;
+  text-shadow: none !important;
+  background: none !important;
+}
+
+/* ตัวหนังสือ role / user */
+.navbar .navbar-right span,
+.navbar .navbar-right .role,
+.navbar .navbar-right .username {
+  pointer-events: none;          /* ❗ ไม่รับ hover */
+  position: relative;
+  z-index: 3;
+  color: #e5e7eb !important;     /* อ่านชัด */
+}
+/* กัน shimmer / glow จาก ::before ของ navbar */
+.navbar::before {
+  pointer-events: none;
+}
+
+/* แต่ไม่ให้มันกระทบ role text */
+.navbar .navbar-right {
+  isolation: isolate;  /* 🔥 แยก layer ออก */
+}
+/* ปิด hover ทุกอย่างใน navbar */
+.navbar * {
+  pointer-events: none;
+}
+
+/* เปิด hover แค่ลิงก์ + ปุ่ม */
+.navbar a,
+.navbar button,
+.navbar .btn {
+  pointer-events: auto;
+}
+/* =========================================
+   NAVBAR FIX: STOP ROLE / USER HOVER EFFECT
+   ใช้กับ base.html ชุดนี้โดยตรง
+========================================= */
+
+/* กล่องขวาสุดของ navbar */
+.app-navbar .d-flex.align-items-center {
+  position: relative;
+  z-index: 5;
+}
+
+/* Role badge + Username */
+.app-navbar .app-badge,
+.app-navbar .app-badge *,
+.app-navbar .d-flex.align-items-center > span {
+  animation: none !important;
+  transition: none !important;
+  filter: none !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+  background-image: none !important;
+
+  pointer-events: none;          /* ❗ ไม่รับ hover */
+}
+
+/* บังคับสีให้อ่านชัด */
+.app-navbar .app-badge {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #f1f5f9 !important;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+/* ชื่อผู้ใช้ */
+.app-navbar .d-flex.align-items-center > span.text-light {
+  color: #e5e7eb !important;
+  opacity: 1 !important;
+}
+/* ให้ปุ่ม Logout ยัง hover ได้ */
+.app-navbar .app-btn {
+  pointer-events: auto;
+  transition: all 0.25s ease;
+}
+
+/* Hover เฉพาะปุ่ม */
+.app-navbar .app-btn:hover {
+  box-shadow: 0 0 12px rgba(255, 193, 7, 0.45);
+  transform: translateY(-1px);
+}
+/* ===============================
+   FIX: ROLE BADGE NO HOVER EVER
+=============================== */
+.app-navbar:hover .app-badge,
+.app-navbar .app-badge:hover {
+  background: rgba(255,255,255,0.12) !important;
+  color: #e5e7eb !important;
+
+  box-shadow: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+  transform: none !important;
+
+  animation: none !important;
+  transition: none !important;
+}
+/* ===============================
+   ADMIN AVATAR — SUBTLE PREMIUM
+=============================== */
+.app-navbar .navbar-brand img {
+  background: radial-gradient(
+    circle at top left,
+    rgba(255,255,255,0.25),
+    rgba(0,0,0,0.9)
+  );
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow:
+    0 0 0 2px rgba(255,193,7,0.15),
+    0 0 12px rgba(0,0,0,0.6);
+
+  transition: box-shadow 0.4s ease;
+}
+
+/* subtle breathing (ช้ามาก ดูแพง) */
+@keyframes avatar-breathe {
+  0%, 100% {
+    box-shadow:
+      0 0 0 2px rgba(255,193,7,0.12),
+      0 0 10px rgba(0,0,0,0.6);
+  }
+  50% {
+    box-shadow:
+      0 0 0 3px rgba(255,193,7,0.22),
+      0 0 14px rgba(0,0,0,0.75);
+  }
+}
+
+.app-navbar .navbar-brand img {
+  animation: avatar-breathe 6s ease-in-out infinite;
+}
+/* กันไม่ให้ hover navbar ลามเข้า avatar */
+.app-animate-nav:hover .navbar-brand img {
+  filter: none !important;
+  transform: none !important;
+}
+/* ❌ กันไม่ให้ Role รับผลจาก shimmer / glow ของ navbar */
+.app-animate-nav:hover .app-badge {
+  background-image: none !important;
+}
+.app-badge {
+  pointer-events: none; /* ไม่รับ hover ใด ๆ */
+  opacity: 0.95;
+}
+/* ===============================
+   GLOBAL FONT SYSTEM
+=============================== */
+:root {
+  --font-main: "Inter", "Kanit", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ใช้ทั้งเว็บ */
+body,
+.app-body {
+  font-family: var(--font-main);
+  font-weight: 400;
+  letter-spacing: 0.2px;
+}
+h1, h2, h3, h4, h5 {
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.navbar,
+.table,
+.card {
+  font-weight: 400;
+}
+
+.badge,
+.btn {
+  font-weight: 500;
+}
+/* ===============================
+   LOGOUT BUTTON (SOLID, PRO)
+=============================== */
+a.app-btn[href*="logout"] {
+  background: linear-gradient(135deg, #ffb703, #f59e0b);
+  color: #111 !important;
+  border: none !important;
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-weight: 600;
+  box-shadow:
+    0 4px 14px rgba(245, 158, 11, 0.35),
+    inset 0 1px 0 rgba(255,255,255,0.25);
+  transition: all 0.25s ease;
+}
+
+/* Hover */
+a.app-btn[href*="logout"]:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 8px 22px rgba(245, 158, 11, 0.5),
+    inset 0 1px 0 rgba(255,255,255,0.35);
+  background: linear-gradient(135deg, #ffd166, #fbbf24);
+  color: #000 !important;
+}
+
+/* Active */
+a.app-btn[href*="logout"]:active {
+  transform: translateY(0);
+  box-shadow:
+    0 4px 10px rgba(245, 158, 11, 0.35) inset;
+}
+/* Role badge ต้องนิ่ง 100% */
+.app-badge,
+.app-badge:hover {
+  transform: none !important;
+  box-shadow: none !important;
+  background: rgba(255,255,255,0.12);
+  cursor: default;
+}
+/* ===============================
+   GLOBAL NOTIFICATION (PRO)
+=============================== */
+#notify-container,
+.toast-stack {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Base box */
+.notify,
+.toast-item {
+  min-width: 280px;
+  max-width: 360px;
+  background: rgba(25, 28, 35, 0.92);
+  backdrop-filter: blur(12px);
+  border-radius: 14px;
+  padding: 14px 16px 14px 18px;
+  color: #f3f4f6;
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.55),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+  border-left: 4px solid transparent;
+  animation: toast-in 0.35s ease forwards;
+  position: relative;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Close button */
+.toast-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.5);
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.toast-close:hover {
+  color: #fff;
+}
+
+/* Title */
+.toast-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+/* Progress bar */
+.toast-bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 100%;
+  background: rgba(255,255,255,0.15);
+  animation: toast-bar 5s linear forwards;
+  border-radius: 0 0 14px 14px;
+}
+
+/* ===============================
+   STATUS COLORS
+=============================== */
+.notify-success,
+.toast-success {
+  border-left-color: #22c55e;
+}
+
+.notify-info,
+.toast-info {
+  border-left-color: #38bdf8;
+}
+
+.notify-warning,
+.toast-warning {
+  border-left-color: #facc15;
+}
+
+.notify-error,
+.toast-danger {
+  border-left-color: #ef4444;
+}
+
+/* ===============================
+   ANIMATIONS
+=============================== */
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.toast-hide,
+.notify-hide {
+  animation: toast-out 0.3s ease forwards;
+}
+
+@keyframes toast-out {
+  to {
+    opacity: 0;
+    transform: translateX(20px) scale(0.96);
+  }
+}
+
+@keyframes toast-bar {
+  from { width: 100%; }
+  to { width: 0%; }
+}
+/* ===== Notification base ===== */
+.notify {
+  opacity: 0;
+  transform: translateY(-8px);
+  animation: notify-in .35s ease forwards;
+}
+
+/* ตอนกำลังจะหาย */
+.notify.hide {
+  animation: notify-out .35s ease forwards;
+}
+
+/* ===== Animations ===== */
+@keyframes notify-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes notify-out {
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}

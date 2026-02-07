@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4" style="max-width:700px;">
+
+  <div class="card shadow">
+    <div class="card-header bg-dark text-light">
+      <h5 class="mb-0">📋 รายละเอียดคำขอเบิก</h5>
+    </div>
+
+    <div class="card-body">
+      <p><b>ครุภัณฑ์:</b> {{ checkout.asset.name }}</p>
+      <p><b>ผู้ขอ:</b> {{ checkout.borrower.full_name }}</p>
+      <p><b>สถานะ:</b>
+        {% if checkout.status == 'pending' %}
+          <span class="badge bg-warning text-dark">รออนุมัติ</span>
+        {% elif checkout.status == 'approved' %}
+          <span class="badge bg-success">อนุมัติ</span>
+        {% else %}
+          <span class="badge bg-danger">ปฏิเสธ</span>
+        {% endif %}
+      </p>
+
+      {% if checkout.status == 'pending' %}
+      <div class="d-flex gap-2 mt-4">
+        <a href="{{ url_for('checkouts.approve', id=checkout.id) }}"
+           class="btn btn-success">
+          ✅ อนุมัติ
+        </a>
+        <a href="{{ url_for('checkouts.reject', id=checkout.id) }}"
+           class="btn btn-danger">
+          ❌ ปฏิเสธ
+        </a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
